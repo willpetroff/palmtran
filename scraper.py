@@ -1,7 +1,10 @@
-from requests import get
 import csv
-from time import sleep
+
 from datetime import datetime
+from requests import get
+from string import digits
+from time import sleep
+
 
 HEADER = {'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; WOW64; rv:47.0) Gecko/20100101 Firefox/47.0',
           'Referrer': 'http://www.palmtran.org/igo'}
@@ -28,7 +31,7 @@ while request.status_code == 200:
                      item['OnBoard'],
                      item['Destination'],
                      item['Name'],
-                     item['LastUpdated'],
+                     int(''.join([char for char in item['LastUpdated'] if char in digits or char is '-'][:-5])) / 1000,
                      item['Heading'],
                      item['OpStatus'],
                      item['DisplayStatus'],
